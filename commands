@@ -10,3 +10,5 @@ sudo ./byfn.sh -m generate
 Sudo ./byfn.sh -m up
 Sudo ./byfn.sh -m down
 
+3. GRPC protocol command 
+npm install --global grpc 
