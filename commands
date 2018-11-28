@@ -1,0 +1,12 @@
+1. Remove Docker images 
+Run :- docker ps -aq
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
+
+2. Start the network
+Move to first network.....
+sudo ./byfn.sh -m generate 
+Sudo ./byfn.sh -m up
+Sudo ./byfn.sh -m down
+
