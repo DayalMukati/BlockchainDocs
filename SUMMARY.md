@@ -1,21 +1,20 @@
 # Table of contents
 
-* [👋 Welcome to Hyperledger Fabric](README.md)
+* [Welcome](README.md)
 
-## Overview
+## Blockchain Foundation
 
-* [💡 Hyperledger Fabric](overview/hyperledger-fabric.md)
-* [👨‍💻 Test Network](overview/test-network.md)
+* [Coming Soon](blockchain-foundation/quickstart.md)
 
-## Pre-Requisites
+## Hyperledger Fabric
 
-* [👲 NoMachine Installation](pre-requisites/nomachine-installation.md)
-* [⚓ HLF Prerequisites](pre-requisites/hlf-prerequisites.md)
+* [Test Network](hyperledger-fabric/test-network.md)
 
-## Network Deployment
+## Basics
 
-* [🧪 Fabric Installation & Test](network-deployment/fabric-installation-and-test.md)
-* [✈️ Launch Network](network-deployment/launch-network.md)
-* [⛓️ Channel Creation](network-deployment/channel-creation.md)
-* [🚚 Chaincode Deployment](network-deployment/chaincode-deployment.md)
-* [▶️ Chaincode Execution](network-deployment/chaincode-execution.md)
+* [Editor](basics/editor.md)
+* [Markdown](basics/markdown.md)
+* [Images & media](basics/images-and-media.md)
+* [Interactive blocks](basics/interactive-blocks.md)
+* [OpenAPI](basics/openapi.md)
+* [Integrations](basics/integrations.md)

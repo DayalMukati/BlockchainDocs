@@ -1,37 +1,46 @@
 ---
-cover: >-
-  https://repository-images.githubusercontent.com/66573241/e4a04d80-cd1c-11e9-8af2-786d342820bb
+icon: hand-wave
+cover: https://gitbookio.github.io/onboarding-template-images/header.png
 coverY: 0
+layout:
+  cover:
+    visible: true
+    size: full
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
-# 👋 Welcome to Hyperledger Fabric
+# Welcome
 
-## Overview
+### Welcome to HashStudy: Your Hub for Blockchain Recipes
 
-Hyperledger Fabric is an open-source enterprise-grade permissioned distributed ledger technology (DLT) platform, designed for use in enterprise contexts, that delivers some key differentiating capabilities over other popular distributed ledger or blockchain platforms.
+Dive into the world of blockchain with our collection of hands-on recipes! At HashStudy, we know that the best way to learn is by doing, which is why each recipe is designed to guide you step-by-step through building and deploying blockchain solutions. Whether you’re a beginner or a seasoned pro, our recipes will help you master the essentials and push the boundaries of blockchain technology.
 
-One key point of differentiation is that Hyperledger was established under the Linux Foundation, which itself has a long and very successful history of nurturing open-source projects under **open governance** that grow strong sustainable communities and thriving ecosystems. Hyperledger is governed by a diverse technical steering committee, and the Hyperledger Fabric project by a diverse set of maintainers from multiple organizations. It has a development community that has grown to over 35 organizations and nearly 200 developers since its earliest commits.
+**What You’ll Find Here:**
 
-Fabric has a highly **modular** and **configurable** architecture, enabling innovation, versatility and optimization for a broad range of industry use cases including banking, finance, insurance, healthcare, human resources, supply chain and even digital music delivery.
+* **Blockchain Recipes for Every Level:** Discover foundational and advanced blockchain concepts with recipes covering Ethereum, Hyperledger Fabric, Hedera, and more. Each recipe is crafted to make complex topics accessible and applicable to real-world scenarios.
+* **Interactive Labs and Practice Environments:** Get hands-on experience with interactive labs embedded in each recipe, allowing you to practice in environments that simulate real-world blockchain applications.
+* **Portfolio-Building Projects:** Every recipe is a building block for your portfolio. Create impactful projects like smart contracts, private Hyperledger networks, and decentralized apps (dApps) to showcase your skills to the world.
+* **Expert Insights and Pro Tips:** Learn from industry experts with recipes that include insider tips, best practices, and the latest blockchain trends.
 
-Fabric is the first distributed ledger platform to support **smart contracts authored in general-purpose programming languages** such as Java, Go and Node.js, rather than constrained domain-specific languages (DSL). This means that most enterprises already have the skill set needed to develop smart contracts, and no additional training to learn a new language or DSL is needed.
+### **Why HashStudy?**
 
-The Fabric platform is also **permissioned**, meaning that, unlike with a public permissionless network, the participants are known to each other, rather than anonymous and therefore fully untrusted. This means that while the participants may not _fully_ trust one another (they may, for example, be competitors in the same industry), a network can be operated under a governance model that is built off of what trust _does_ exist between participants, such as a legal agreement or framework for handling disputes.
+HashStudy offers a unique, recipe-based approach to blockchain learning. Our recipes are created by blockchain architects and experts with real-world experience, making them practical, relevant, and easy to follow. Each recipe is crafted to turn theoretical knowledge into practical skills you can use right away.
 
+**Explore Our Recipe Categories:**
 
+* **Blockchain Basics** – Start with core blockchain concepts like consensus mechanisms, cryptography, and smart contract fundamentals.
+* **Ethereum Development** – Explore Ethereum recipes for smart contracts, Solidity programming, and gas-efficient design.
+* **Hyperledger Fabric** – Discover enterprise blockchain recipes covering network setup, chaincode development, and data privacy.
+* **Hedera Hashgraph** – Unlock the potential of Hedera with recipes for building secure, high-performance decentralized applications.
+* **Advanced Blockchain Recipes** – Dive into recipes on scalability, cross-chain solutions, and blockchain applications for enterprise.
 
-## Get Started
-
-We've put together some helpful guides for you to get set up with our Hyperledger Fabric Network quickly and easily.
-
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
-{% endcontent-ref %}
-
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
-{% endcontent-ref %}
-
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
-{% endcontent-ref %}
+Start your journey into blockchain with HashStudy recipes! **Browse our recipes and build your blockchain expertise one step at a time.**
