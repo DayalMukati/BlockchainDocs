@@ -70,3 +70,6 @@ The transaction flow, which follows the execute-order-validate paradigm, is as i
 4.  4\.
 
     **Validate**. Firstly, each peer validates the received transactions by checking if a transaction follows the correspondent endorsement policy. After that, a read-write conflict check is run against all transactions in the block, sequentially. For each transaction, it compares the versions of the keys in the read-set with those currently on the ledger. It checks if the values are the same. In case they do not match, the peers discard the transaction. Finally, the ledger is updated, in which the ledger appends the created block to its head. The ledger appends the results of the validity checks, including the invalid transactions.
+
+{% embed url="https://docs.google.com/presentation/d/e/2PACX-1vRxTkz7cjb-aDes5rehLEAZamaJKiMhDQ_y5ZB1qanZWjvqm-trwdou1BIQuR8bOEThxYO1g_Q7BzBk/pub?delayms=3000&loop=false&start=true" %}
+
