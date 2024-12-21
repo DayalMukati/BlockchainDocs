@@ -26,11 +26,63 @@ mkdir hyperledger
 cd hyperledger
 ```
 
-Download samples, binaries and docker images:
+To install Hyperledger Fabric, we need to install the script. Let’s download it using the cURL command.\
+
 
 ```
-curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.0 1.5.2
+curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
 ```
+
+Let’s verify if the script has been downloaded successfully.&#x20;
+
+```
+ls
+```
+
+install-fabric.sh
+
+Run the script with the -h option to see the options available:
+
+```
+ ./install-fabric.sh -h
+```
+
+
+
+You should see the following output:
+
+`Usage: ./install-fabric.sh [-f|--fabric-version <arg>] [-c|--ca-version <arg>] <comp-1> [<comp-2>] ... [<comp-n>] ...`
+
+&#x20;       `<comp>: Component to install one or more of  d[ocker]|b[inary]|s[amples]. If none specified, all will be installed`
+
+&#x20;       `-f, --fabric-version: FabricVersion (default: '2.5.6')`
+
+&#x20;       `-c, --ca-version: Fabric CA Version (default: '1.5.9')`
+
+#### Download Samples Using the Script
+
+To specify the components to download, add one or more of the following arguments. Each argument can be shortened to its first letter.
+
+\
+
+
+* docker to use Docker to download the Hyperledger Fabric container images
+* podman to use Podman to download the Hyperledger Fabric container images
+* binary to download the Hyperledger Fabric binaries
+* samples to clone the Hyperledger fabric-samples GitHub repository to the current directory
+
+\
+
+
+To pull the Docker containers and clone the samples repository, run one of the following commands:
+
+```
+./install-fabric.sh docker samples binary
+```
+
+If no arguments are supplied, then the arguments docker binary samples are assumed.
+
+
 
 The command above downloads and executes a bash script that will download and extract all of the platform-specific binaries you will need to set up your network and place them into the cloned repo you created above. It retrieves the following platform-specific binaries:
 

@@ -8,7 +8,7 @@ cover: >-
 coverY: 0
 ---
 
-# ⚓ HLF Prerequisites
+# ⚓ Prerequisites for Ubuntu
 
 ### Install Git
 
@@ -120,8 +120,7 @@ docker compose version
 We would need Go-Lang to run chaincodes on Hyperledger Fabric. Let's Install by running the below commands.
 
 ```bash
-sudo wget -c https://dl.google.com/go/go1.19.1.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
-export PATH=$PATH:/usr/local/go/bin
+sudo snap install golang --classic
 source ~/.profile
 ```
 
@@ -146,8 +145,8 @@ source ~/.profile
 You can install multiple node.js versions using nvm. And use the required version for your application from installed node.js.
 
 ```bash
-nvm install v14.15.4
-nvm use v14.15.4
+nvm install v22
+nvm use v22
 ```
 
 Let's check Node & Npm Versions

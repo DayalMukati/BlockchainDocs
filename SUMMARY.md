@@ -9,7 +9,7 @@
 ## Pre-Requisites
 
 * [👲 NoMachine Installation](pre-requisites/nomachine-installation.md)
-* [⚓ HLF Prerequisites](pre-requisites/hlf-prerequisites.md)
+* [⚓ Prerequisites for Ubuntu](pre-requisites/prerequisites-for-ubuntu.md)
 
 ## Test Network
 
