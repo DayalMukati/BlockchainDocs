@@ -92,14 +92,15 @@ peer channel join -b ./channel-artifacts/mychannel.block
 
 ```sh
 source ./scripts/setOrgPeerContext.sh 1
-docker exec cli ./scripts/setAnchorPeer.sh 1 $CHANNEL_NAME
+source ./scripts/setAnchorPeer.sh 1 $CHANNEL_NAME
 ```
 
 8. Update Anchor peer for Org2
 
 ```sh
 source ./scripts/setOrgPeerContext.sh 2
-docker exec cli ./scripts/setAnchorPeer.sh 2 $CHANNEL_NAME
+source ./scripts/setAnchorPeer.sh 2 $CHANNEL_NAME
+
 ```
 
 That's it!\
