@@ -73,7 +73,8 @@ cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml
 
 ```bash
 export COMPOSE_PROJECT_NAME=net
-IMAGE_TAG=latest docker-compose -f docker/docker-compose-test-net.yaml up
+export DOCKER_SOCK=/var/run/docker.sock
+IMAGE_TAG=latest docker-compose -f compose/compose-test-net.yaml -f compose/docker/docker-compose-test-net.yaml up
 
 ```
 
