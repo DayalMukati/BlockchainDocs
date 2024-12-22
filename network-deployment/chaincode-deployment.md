@@ -40,28 +40,26 @@ Check if the package is created: ‘fabcar.tar.gz’ file should be seen.
     A successful install command will return a chaincode package identifier, which is the package label combined with a hash of the package. This package identifier associates a chaincode package installed on your peers with a chaincode definition approved by your organization.
 
     \
-
-
-    1. Install the chaincode on the peer of Org1
+    Install the chaincode on the peer of Org1
 
 ```sh
 peer lifecycle chaincode install asset.tar.gz
 ```
 
-2. Install the chaincode on peer of Org2
+Install the chaincode on peer of Org2
 
 ```sh
 source ./scripts/setOrgPeerContext.sh 2
 peer lifecycle chaincode install asset.tar.gz
 ```
 
-5. The Query for Installed package
+The Query for Installed package
 
 ```sh
 peer lifecycle chaincode queryinstalled 2>&1 | tee outfile
 ```
 
-6. Set the PACKAGE\_ID value
+5. Set the PACKAGE\_ID value
 
 Create a new script file inside the _`scripts`_ folder named: _`setPackageID.sh`_ and write below code inside it.
 
@@ -81,7 +79,7 @@ source ./scripts/setPackageID.sh outfile
 
 
 
-7. **Approval Process:** The chaincode is governed by a chaincode definition. When channel members approve a chaincode definition, the approval acts as a vote by an organization on the chaincode parameters it accepts. These approved organization definitions allow channel members to agree on a chaincode before it can be used on a channel.
+6. **Approval Process:** The chaincode is governed by a chaincode definition. When channel members approve a chaincode definition, the approval acts as a vote by an organization on the chaincode parameters it accepts. These approved organization definitions allow channel members to agree on a chaincode before it can be used on a channel.
 
 \
 
@@ -127,7 +125,7 @@ peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name a
 
 ```
 
-8. **Set the peer address for identifying the endorsing peers**
+7. **Set the peer address for identifying the endorsing peers**
 
 Create a new script in the `scripts` the folder named: `setPeerConnectionParam.sh`
 
@@ -149,7 +147,7 @@ Now run the script.
 source ./scripts/setPeerConnectionParam.sh 1 2
 ```
 
-9. **Commit the chaincode definition to Channel**
+8. **Commit the chaincode definition to Channel**
 
 ```sh
 peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name asset $PEER_CONN_PARAMS --version ${VERSION} --sequence ${VERSION} --init-required
@@ -157,20 +155,20 @@ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride o
 
 
 
-10. Check docker status
+9. Check docker status
 
 ```sh
 docker ps
 ```
 
-11. Query chaincode commit as Org2
+10. Query chaincode commit as Org2
 
 ```sh
 peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name asset
 
 ```
 
-13. Query chaincode commit as Org1
+11. Query chaincode commit as Org1
 
 ```sh
 source ./scripts/setOrgPeerContext.sh 1
