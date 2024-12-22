@@ -19,7 +19,7 @@ export CHANNEL_NAME=mychannel
 2. Create the System Genesis  Block and Channel Genesis block
 
 ```
-configtxgen -profile TwoOrgsApplicationGenesis -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
+configtxgen -profile ChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
 ```
 
 3. Convert Block to JSON format to understand the data inside it.
