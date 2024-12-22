@@ -1,49 +1,54 @@
 # ▶️ Chaincode Execution
 
-1. This chaincode fabcar, has to be initialized before executing other transactions.
+1.  Before interaction with chaincode, we need to set up the environment path and variables to ensure smooth execution.&#x20;
+
+    \
+    Let’s open the terminal, navigate to the fabric-samples/test-network directory and enter the commands below:
+
+    &#x20;       The first command sets the path to include the hyperledger fabrics binaries directory.
+
+
 
 ```
-source ./scripts/setPeerConnectionParam.sh 1 2
+export PATH=${PWD}/../bin:${PWD}:$PATH
+
+export CHANNEL_NAME=mychannel 
 
 source ./scripts/setOrgPeerContext.sh 1
 
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n fabcar $PEER_CONN_PARAMS --isInit -c '{"function":"initLedger","Args":[]}'
-
 ```
 
-2. Let's create a new car
+2. Run the command below to initialize the chaincode
 
 {% code overflow="wrap" %}
 ```
-source ./scripts/setOrgPeerContext.sh 1
-
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n fabcar $PEER_CONN_PARAMS -c '{"function":"CreateCar","Args":["CAR11","Tata","Safari", "Red", "Ron"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n asset $PEER_CONN_PARAMS --isInit -c '{"function":"InitLedger","Args":[]}'
 ```
 {% endcode %}
 
-3. Query the Status of the state after init.
+3. Run the command below to get the assets list from the ledger.
 
 {% code overflow="wrap" %}
 ```
-peer chaincode query -C $CHANNEL_NAME -n fabcar -c '{"Args":["queryAllCars"]}'
+peer chaincode query -C $CHANNEL_NAME -n asset -c '{"Args":["GetAllAssets"]}'
 ```
 {% endcode %}
 
-4. Change the ownership of CAR11 to John:
+4. Run the command below to create a new asset.
 
 {% code overflow="wrap" %}
 ```
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n fabcar $PEER_CONN_PARAMS -c '{"function":"changeCarOwner","Args":["CAR11","John"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n asset $PEER_CONN_PARAMS -c '{"function":"CreateAsset","Args":["asset11","red","8", "Ron", "500"]}'
 ```
 {% endcode %}
 
-5. As Org2 query to check the status as ownership of CAR11
+5. Run the command below to read the asset.
 
 {% code overflow="wrap" %}
 ```
 source ./scripts/setOrgPeerContext.sh 2
 
-peer chaincode query -C $CHANNEL_NAME -n fabcar -c '{"Args":["queryCar","CAR11"]}'
+peer chaincode query -C $CHANNEL_NAME -n asset -c '{"Args":["ReadAsset","asset11"]}'
 
 ```
 {% endcode %}
