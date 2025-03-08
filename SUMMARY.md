@@ -5,11 +5,13 @@
 ## Overview
 
 * [💡 Hyperledger Fabric](overview/hyperledger-fabric.md)
+* [Pre-Reading Material](overview/pre-reading-material.md)
 
 ## Pre-Requisites
 
 * [👲 NoMachine Installation](pre-requisites/nomachine-installation.md)
 * [⚓ Prerequisites for Ubuntu](pre-requisites/prerequisites-for-ubuntu.md)
+* [Pre-Hands-on Tools](pre-requisites/pre-hands-on-tools.md)
 
 ## Test Network
 
