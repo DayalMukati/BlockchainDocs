@@ -2,9 +2,6 @@
 
 Your company is building a **decentralized identity (DID) system** using **Hyperledger Fabric**. This system will allow users to create **self-sovereign identities**, update credentials, and verify identities **without relying on a central authority**.
 
-\
-
-
 Your task is to:
 
 **1. Create a new channel named `identitychannel`**.
@@ -19,9 +16,6 @@ Your task is to:
 
 ***
 
-\
-
-
 **Steps to be Performed**
 
 **1. Create a New Channel**
@@ -31,16 +25,10 @@ Your task is to:
 * Create the channel using `peer channel create`
 * Join `Org1` and `Org2` to `identitychannel`
 
-\
-
-
 **2. Deploy the Chaincode**
 
 * Deploy **`identitycc`** onto `identitychannel`
 * Ensure endorsement policy allows both **Org1 and Org2** to validate transactions
-
-\
-
 
 **3. Smart Contract Implementation**
 
@@ -56,13 +44,6 @@ Your task is to:
 * **Update credentials** for the DID
 * **Verify the DID**
 * **Query identity details**
-
-***
-
-#### &#x20; <a href="#expected-transactions" id="expected-transactions"></a>
-
-\
-
 
 **Expected Transactions**
 
@@ -88,12 +69,6 @@ Your task is to:
 
 ***
 
-\
-
-
-\
-
-
 **Deliverables**
 
 * **A functional new channel (`identitychannel`)**
@@ -101,20 +76,15 @@ Your task is to:
 * **Successfully deployed `identitycc` chaincode**
 * **Correct execution of transactions (DID creation, update, and verification)**
 
-\
 
 
 **Support Commands for Setting Up Environment Variables (Org1 & Org2)**
 
-These commands will **set up the correct environment** for interacting with **Org1** and **Org2** in the Hyperledger Fabric network.\
-
-
-\
-
+These commands will **set up the correct environment** for interacting with **Org1** and **Org2** in the Hyperledger Fabric network.
 
 **1. Set Environment for Org1 (Identity Provider)**
 
-```
+```bash
 # Set the context for Org1's peer
 source ./scripts/setOrgPeerContext.sh 1
 
@@ -131,12 +101,6 @@ export CORE_PEER_ADDRESS=localhost:7051
 ```
 
 ***
-
-\
-
-
-\
-
 
 **2. Set Environment for Org2 (Verifier)**
 
@@ -178,43 +142,42 @@ peer channel list
 peer channel getinfo -c identitychannel
 ```
 
+**5. Deploy Chaincode**
 
+```
+sudo ./network.sh deployCC -c identitychannel -ccn identitycc -ccp ../chaincode -ccl go
 
-**`5. Deploy Chaincode`**
+```
 
-\
-`sudo ./network.sh deployCC -c identitychannel -ccn identitycc -ccp ../chaincode -ccl go`
+**6 Create DID**
 
-\
+```
+peer chaincode invoke -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls --cafile $ORDERER_CA -C identitychannel -n identitycc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+    -c '{"Args":["CreateDID","did:user1","John Doe","Passport Issued"]}'
+```
 
+**7. Update DID**
 
-**`6 Create DID`**
-
-`peer chaincode invoke -o localhost:7050 \`\
-&#x20;   `--ordererTLSHostnameOverride orderer.example.com \`\
-&#x20;   `--tls --cafile $ORDERER_CA -C identitychannel -n identitycc \`\
-&#x20;   `--peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \`\
-&#x20;   `--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \`\
-&#x20;   `-c '{"Args":["CreateDID","did:user1","John Doe","Passport Issued"]}'`\
-7\. Update DID
-
-\
-
-
-7. peer chaincode invoke -o localhost:7050 \\\
-   &#x20;   \--ordererTLSHostnameOverride orderer.example.com \\\
-   &#x20;   \--tls --cafile $ORDERER\_CA -C identitychannel -n identitycc \\\
-   &#x20;   \--peerAddresses localhost:7051 --tlsRootCertFiles $PEER0\_ORG1\_CA \\\
-   &#x20;   \--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0\_ORG2\_CA \\\
-   &#x20;   -c '{"Args":\["UpdateCredentials","did:user1","Passport + Driving License Verified"]}'
-
-
+```
+peer chaincode invoke -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls --cafile $ORDERER_CA -C identitychannel -n identitycc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+    -c '{"Args":["UpdateCredentials","did:user1","Passport + Driving License Verified"]}'
+```
 
 8. **Verifiy DID**
 
-peer chaincode invoke -o localhost:7050 \\\
-&#x20;   \--ordererTLSHostnameOverride orderer.example.com \\\
-&#x20;   \--tls --cafile $ORDERER\_CA -C identitychannel -n identitycc \\\
-&#x20;   \--peerAddresses localhost:7051 --tlsRootCertFiles $PEER0\_ORG1\_CA \\\
-&#x20;   \--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0\_ORG2\_CA \\\
-&#x20;   -c '{"Args":\["VerifyDID","did:user1"]}'\
+```
+peer chaincode invoke -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls --cafile $ORDERER_CA -C identitychannel -n identitycc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+    -c '{"Args":["VerifyDID","did:user1"]}'
+```
