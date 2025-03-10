@@ -6,7 +6,7 @@ Your organization is building a decentralized Intellectual Property (IP) rights 
 
 ***
 
-### **Enhancing Scalability and Redundancy**
+#### **Enhancing Scalability and Redundancy**
 
 To enhance scalability and redundancy, you need to:
 
