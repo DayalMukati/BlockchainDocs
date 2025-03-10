@@ -48,7 +48,7 @@ The chaincode should support:
 #### **4. Testing & Validation**
 
 * **Register an IP(ip1) for a creator**.
-* **Transfer IP rights** to another organization.
+* **Transfer IP rights** to another user `Bob`.
 * **Verify IP ownership after transfer**.
 * **Ensure `peer1.org1.example.com` is correctly synced** with the network.
 
@@ -118,7 +118,7 @@ peer channel join -b ./channel-artifacts/ipchannel.block
 
 ***
 
-#### **5️⃣ Deploying Chaincode (`ipcc`) on `ipchannel`**
+#### **5. Deploying Chaincode (`ipcc`) on `ipchannel`**
 
 ```bash
 ./network.sh deployCC -c ipchannel -ccn ipcc -ccp ../chaincode -ccl go
@@ -126,7 +126,7 @@ peer channel join -b ./channel-artifacts/ipchannel.block
 
 ***
 
-#### **6️⃣ Restarting the Network (If Needed)**
+#### **6. Restarting the Network (If Needed)**
 
 ```bash
 ./network.sh down
