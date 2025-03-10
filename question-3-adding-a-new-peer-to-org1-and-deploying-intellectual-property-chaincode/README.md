@@ -47,7 +47,7 @@ The chaincode should support:
 
 #### **4. Testing & Validation**
 
-* **Register an IP for a creator**.
+* **Register an IP(ip1) for a creator**.
 * **Transfer IP rights** to another organization.
 * **Verify IP ownership after transfer**.
 * **Ensure `peer1.org1.example.com` is correctly synced** with the network.
@@ -133,3 +133,48 @@ peer channel join -b ./channel-artifacts/ipchannel.block
 ```
 
 **This ensures your Intellectual Property (IP) Rights Management system is properly deployed!**&#x20;
+
+
+
+### **Chaincode Execution Commands**
+
+#### **1. Register an Intellectual Property (IP)**
+
+**Function:** `RegisterIP(ipID, owner, title, registered)`
+
+```bash
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C ipchannel -n ipcc --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"Args":["RegisterIP","ip1","Alice","Blockchain Patent","2025-03-06"]}'
+```
+
+***
+
+#### **2. Retrieve Intellectual Property Ownership**
+
+**Function:** `VerifyOwnership(ipID)`
+
+```bash
+peer chaincode query -C ipchannel -n ipcc -c '{"Args":["VerifyOwnership","ip1"]}'
+```
+
+***
+
+#### **3. Transfer Ownership of IP**
+
+**Function:** `TransferIP(ipID, newOwner)`
+
+```bash
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C ipchannel -n ipcc --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"Args":["TransferIP","ip1","Bob"]}'
+```
+
+***
+
+#### **4. Query Updated IP Ownership**
+
+**Verify that ownership transfer was successful.**
+
+```bash
+peer chaincode query -C ipchannel -n ipcc -c '{"Args":["VerifyOwnership","ip1"]}'
+```
+
+***
+
