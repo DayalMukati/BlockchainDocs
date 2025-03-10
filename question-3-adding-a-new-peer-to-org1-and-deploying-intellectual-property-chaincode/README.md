@@ -102,6 +102,12 @@ peer channel getinfo -c ipchannel
 
 ***
 
+if you get the access issue then use below cmd or `sudo`:
+
+```
+sudo chmod -R 755 /home/ubuntu/challenge/test-network/organizations/
+```
+
 #### **4. Joining New Peer to `ipchannel`**
 
 ```bash
