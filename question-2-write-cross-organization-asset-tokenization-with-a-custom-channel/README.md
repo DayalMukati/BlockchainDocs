@@ -134,41 +134,59 @@ sudo ./network.sh deployCC -c tokenizationchannel -ccn tokencc -ccp ../chaincode
 
 
 
-#### **4.** Mint New Tokens for an Asset
+#### **6. Mint New Tokens for an Asset**
 
 ```bash
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C tokenizationchannel -n tokencc --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"Args":["MintTokens","asset1","1000","Org1"]}'
-
+peer chaincode invoke -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls --cafile $ORDERER_CA -C tokenizationchannel -n tokencc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+    -c '{"Args":["MintTokens","asset1","1000","Org1"]}'
 ```
 
-5. Retrieve Asset Balance
+***
 
-```
-peer chaincode query -C tokenizationchannel -n tokencc -c '{"Args":["GetAssetBalance","asset1"]}'
-
-```
-
-6. Transfer Token Ownership
-
-```
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C tokenizationchannel -n tokencc --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"Args":["TransferTokens","asset1","500","Org2"]}'
-
-```
-
-7. Burn Tokens (Remove Tokens)
-
-```
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C tokenizationchannel -n tokencc --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"Args":["BurnTokens","asset1","500"]}'
-
-```
-
-
-
-8. **Restarting the Network (if needed)**
-
-If you need to **restart the network**, use:
+#### **7. Retrieve Asset Balance**
 
 ```bash
-cd fabric-samples/test-network
-./network.sh down
+peer chaincode query -C tokenizationchannel -n tokencc \
+    -c '{"Args":["GetAsset","asset1"]}'
 ```
+
+***
+
+#### **8. Transfer Token Ownership**
+
+```bash
+peer chaincode invoke -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls --cafile $ORDERER_CA -C tokenizationchannel -n tokencc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+    -c '{"Args":["TransferTokens","asset1","500","Org2"]}'
+```
+
+***
+
+#### **9. Burn Tokens (Remove Tokens)**
+
+```bash
+peer chaincode invoke -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls --cafile $ORDERER_CA -C tokenizationchannel -n tokencc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+    -c '{"Args":["BurnTokens","asset1","200"]}'
+```
+
+***
+
+#### **10. Restarting the Network (if needed)**
+
+```bash
+sudo ./network.sh down
+```
+
+**These commands ensure proper execution of tokenization transactions!**&#x20;
+
