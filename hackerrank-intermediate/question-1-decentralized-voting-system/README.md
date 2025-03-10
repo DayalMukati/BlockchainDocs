@@ -6,26 +6,28 @@ You are tasked with developing a decentralized voting system using Hyperledger F
 
 **Requirements:**
 
-1. **Smart Contract Functionality:**
-   * **RegisterVoter(voterID, voterDetails):** Enroll a new voter with a unique identifier and associated details (e.g., name, eligibility status).
-   * **CreateElection(electionID, electionDetails):** Initiate a new election with specific parameters (e.g., list of candidates, start and end times).
-   * **CastVote(voterID, electionID, candidateID):** Allow a registered voter to cast a vote for a chosen candidate in a specific election.
-   * **TallyVotes(electionID):** Count and return the votes for each candidate in the specified election.
-   * **GetElectionResults(electionID):** Retrieve and display the final results of the election.
-2. **Deployment Environment:**
-   * Utilize a pre-configured Hyperledger Fabric test network with the following setup:
-     * Two organizations (Org1 and Org2), each with one peer.
-     * A default channel named `mychannel`.
-     * No pre-existing data on the ledger.
-3. **Implementation Details:**
-   * Write the smart contract in Go (Golang).
-   * Deploy the chaincode `votingcc` on the `mychannel` channel using the test network.
-   * Test the smart contract by performing the following actions:
-     * Register a voter with ID `voter1` and details `{Name: "John Doe", Eligibility: true}`.
-     * Create an election with ID `election1` and details `{Title: "Board Election", Candidates: ["Alice", "Bob"], StartTime: "2025-03-01T08:00:00Z", EndTime: "2025-03-01T20:00:00Z"}`.
-     * Cast a vote from `voter1` for candidate `Alice` in `election1`.
-     * Tally the votes for `election1` after the election ends.
-     * Retrieve and display the results of `election1`.
+* **Smart Contract Functionality:**
+  * **RegisterVoter(voterID, voterDetails):** Enroll a new voter with a unique identifier and associated details (e.g., name, eligibility status).
+  * **CreateElection(electionID, electionDetails):** Initiate a new election with specific parameters (e.g., list of candidates, start and end times).
+  * **CastVote(voterID, electionID, candidateID):** Allow a registered voter to cast a vote for a chosen candidate in a specific election.
+  * **TallyVotes(electionID):** Count and return the votes for each candidate in the specified election.
+  * **GetElectionResults(electionID):** Retrieve and display the final results of the election.
+  *
+* **Deployment Environment:**
+  * Utilize a pre-configured Hyperledger Fabric test network with the following setup:
+    * Two organizations (Org1 and Org2), each with one peer.
+    * A default channel named `mychannel`.
+    * No pre-existing data on the ledger.
+    *
+* **Implementation Details:**
+  * Write the smart contract in Go (Golang).
+  * Deploy the chaincode on the `mychannel` channel using the test network.
+  * Test the smart contract by performing the following actions:
+    * Register a voter with ID `voter1` and details `{Name: "John Doe", Eligibility: true}`.
+    * Create an election with ID `election1` and details `{Title: "Board Election", Candidates: ["Alice", "Bob"], StartTime: "2025-03-01T08:00:00Z", EndTime: "2025-03-01T20:00:00Z"}`.
+    * Cast a vote from `voter1` for candidate `Alice` in `election1`.
+    * Tally the votes for `election1` after the election ends.
+    * Retrieve and display the results of `election1`.
 
 **Notes:**
 
@@ -35,69 +37,71 @@ You are tasked with developing a decentralized voting system using Hyperledger F
 
 **Deployment Steps:**
 
-1. **Deploy the Chaincode:**
-   *   Navigate to the test network directory:
+**Deploy the Chaincode:**
 
-       ```bash
-       cd fabric-samples/test-network
-       ```
-   *   Deploy the chaincode:
+```
+sudo ./network.sh deployCC -c mychannel -ccn votingcc -ccp ../chaincode -ccl go
+```
 
-       ```bash
-       sudo ./network.sh deployCC -c mychannel -ccn votingcc -ccp ../chaincode -ccl go
-       ```
-2. **Set Organization Context:**
-   *   Set the context for Org1:
+**Set Organization Context:**
 
-       <pre class="language-bash"><code class="lang-bash">export FABRIC_CFG_PATH=${PWD}/configtx
-       <strong>source ./scripts/setOrgPeerContext.sh 1
-       </strong></code></pre>
-3. **Interact with the Chaincode:**
-   *   **Register Voter:**
+```
+export FABRIC_CFG_PATH=${PWD}/configtx
+source ./scripts/setOrgPeerContext.sh 1
+```
 
-       ```bash
-       peer chaincode invoke -o localhost:7050 \
-         --ordererTLSHostnameOverride orderer.example.com \
-         --tls --cafile $ORDERER_CA -C mychannel -n votingcc \
-         --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
-         --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
-         -c '{"Args":["RegisterVoter","voter1","{\"Name\":\"John Doe\",\"Eligibility\":true}"]}'
-       ```
-   *   **Create Election:**
+**Interact with the Chaincode:**
 
-       ```bash
-       peer chaincode invoke -o localhost:7050 \
-         --ordererTLSHostnameOverride orderer.example.com \
-         --tls --cafile $ORDERER_CA -C mychannel -n votingcc \
-         --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
-         --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
-         -c '{"Args":["CreateElection","election1","Board Election","[\"Alice\",\"Bob\"]","2025-03-01T08:00:00Z","2025-06-01T20:00:00Z"]}'
+* **Register Voter:**
 
-       ```
-   *   **Cast Vote:**
+```
+peer chaincode invoke -o localhost:7050 \
+--ordererTLSHostnameOverride orderer.example.com \
+--tls --cafile $ORDERER_CA -C mychannel -n votingcc \
+--peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+-c '{"Args":["RegisterVoter","voter1","{\"Name\":\"John Doe\",\"Eligibility\":true}"]}'
+```
 
-       ```bash
-       peer chaincode invoke -o localhost:7050 \
-         --ordererTLSHostnameOverride orderer.example.com \
-         --tls --cafile $ORDERER_CA -C mychannel -n votingcc \
-         --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
-         --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
-         -c '{"Args":["CastVote","voter1","election1","Alice"]}'
-       ```
-   *   **Tally Votes:**
+* **Create Election:**
 
-       ```bash
-       peer chaincode invoke -o localhost:7050 \
-         --ordererTLSHostnameOverride orderer.example.com \
-         --tls --cafile $ORDERER_CA -C mychannel -n votingcc \
-         --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
-         --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
-         -c '{"Args":["TallyVotes","election1"]}'
-       ```
-   *   **Get Election Results:**
+```
+peer chaincode invoke -o localhost:7050 \
+  --ordererTLSHostnameOverride orderer.example.com \
+  --tls --cafile $ORDERER_CA -C mychannel -n votingcc \
+  --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+  --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+  -c '{"Args":["CreateElection","election1","Board Election","[\"Alice\",\"Bob\"]","2025-03-01T08:00:00Z","2025-06-01T20:00:00Z"]}'
+```
 
-       ```bash
-       peer chaincode query -C mychannel -n votingcc -c '{"Args":["GetElectionResults","election1"]}'
-       ```
+* **Cast Vote:**
+
+```
+peer chaincode invoke -o localhost:7050 \
+--ordererTLSHostnameOverride orderer.example.com \
+--tls --cafile $ORDERER_CA -C mychannel -n votingcc \
+--peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+-c '{"Args":["CastVote","voter1","election1","Alice"]}'
+```
+
+* **Tally Votes:**
+
+```
+peer chaincode invoke -o localhost:7050 \
+--ordererTLSHostnameOverride orderer.example.com \
+--tls --cafile $ORDERER_CA -C mychannel -n votingcc \
+--peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+-c '{"Args":["TallyVotes","election1"]}'
+```
+
+* **Get Election Results:**
+
+```
+peer chaincode query -C mychannel -n votingcc -c '{"Args":["GetElectionResults","election1"]}'
+```
+
+
 
 By completing this task, you will demonstrate the ability to develop, deploy, and interact with a decentralized voting system on a Hyperledger Fabric network.
