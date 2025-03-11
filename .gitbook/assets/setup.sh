@@ -1,7 +1,3 @@
-# Setup Script
-
-```
-
 #!/usr/bin/env bash
 
 echo "🔹 Starting system setup for Hyperledger Fabric on Ubuntu..."
@@ -85,8 +81,3 @@ echo "✅ Hyperledger Fabric network successfully started."
 
 echo "🎉 Setup complete! Your Hyperledger Fabric environment is now ready to use."
 exit 0
-
-```
-
-{% file src="../../.gitbook/assets/setup.sh" %}
-
