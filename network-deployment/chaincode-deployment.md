@@ -1,16 +1,16 @@
 # 🚚 Chaincode Deployment
 
-We are going to deploy FabCar chaincode on Test Network. Till now we have created a channel and our peers have joined the channel.&#x20;
+We are going to deploy Asset chaincode on Test Network. Till now we have created a channel and our peers have joined the channel.&#x20;
 
-1. We need to write a script to configure chaincode environment variables. Create a new script file inside `fabric-samples/test-network/scripts` and name it _`setFabCarGolangContext.sh`_
+1. We need to write a script to configure chaincode environment variables. Create a new script file inside `fabric-samples/test-network/scripts` and name it _`setGolangContext.sh`_
 
 ```sh
 export CC_RUNTIME_LANGUAGE=golang
-export CC_SRC_PATH="../chaincode/fabcar/go/"
+export CC_SRC_PATH="../asset-transfer-basic/chaincode-go"
 export VERSION=1
 
 echo Vendoring Go dependencies ...
-pushd ../chaincode/fabcar/go
+pushd ../asset-transfer-basic/chaincode-go
 export GO111MODULE=on go mod vendor
 popd
 echo Finished vendoring Go dependencies
@@ -19,7 +19,7 @@ echo Finished vendoring Go dependencies
 2. Update the environment variable to configure the use of GoLang Chaincode.
 
 ```shell
-source ./scripts/setFabCarGolangContext.sh
+source ./scripts/setGolangContext.sh
 export FABRIC_CFG_PATH=$PWD/../config/
 export FABRIC_CFG_PATH=${PWD}/configtx
 export CHANNEL_NAME=mychannel
@@ -33,7 +33,7 @@ source ./scripts/setOrgPeerContext.sh 1
 peer lifecycle chaincode package asset.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label asset_${VERSION}
 ```
 
-Check if the package is created: ‘fabcar.tar.gz’ file should be seen.
+Check if the package is created: ‘asset.tar.gz’ file should be seen.
 
 4.  **Install the Chaincode:** You need to install the chaincode package on every peer that will execute and endorse transactions. You need to complete this step using your Peer Administrator, whether using the CLI or an SDK.&#x20;
 
