@@ -110,3 +110,10 @@
   * [Setup Script](question-3-write-and-deploy-loan-management-chaincode/setup-script.md)
   * [Scoring Script](question-3-write-and-deploy-loan-management-chaincode/scoring-script.md)
   * [Chaincode](question-3-write-and-deploy-loan-management-chaincode/chaincode.md)
+
+## Backup - Intermediate
+
+* [Question 1: Write and Deploy Credit Scoring Chaincode](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/README.md)
+  * [Setup Script](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/setup-script.md)
+  * [Chaincode](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/chaincode.md)
+  * [Scoring Script](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/scoring-script.md)
