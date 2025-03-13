@@ -128,3 +128,13 @@
   * [Setup Script](question-3-write-and-deploy-smart-invoice-management-chaincode/setup-script.md)
   * [Chaincode](question-3-write-and-deploy-smart-invoice-management-chaincode/chaincode.md)
   * [Scoring Script](question-3-write-and-deploy-smart-invoice-management-chaincode/scoring-script.md)
+
+## Backup - Expert
+
+* [Question 1 : Create new Channel and Write Interbank Cross-Border Payment Settlement Chaincode](backup-expert/question-1-create-new-channel-and-write-interbank-cross-border-payment-settlement-chaincode.md)
+
+***
+
+* [Setup Script](setup-script.md)
+* [Scoring Script](scoring-script.md)
+* [Chaincode](chaincode.md)
