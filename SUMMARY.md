@@ -117,3 +117,14 @@
   * [Setup Script](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/setup-script.md)
   * [Chaincode](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/chaincode.md)
   * [Scoring Script](backup-intermediate/question-1-write-and-deploy-credit-scoring-chaincode/scoring-script.md)
+
+***
+
+* [Question 2: write and Deploy Cross-Border Payment Settlement Chaincode](question-2-write-and-deploy-cross-border-payment-settlement-chaincode/README.md)
+  * [Setup Script](question-2-write-and-deploy-cross-border-payment-settlement-chaincode/setup-script.md)
+  * [Chaincode](question-2-write-and-deploy-cross-border-payment-settlement-chaincode/chaincode.md)
+  * [Scoring Script](question-2-write-and-deploy-cross-border-payment-settlement-chaincode/scoring-script.md)
+* [Question 3: Write and Deploy Smart Invoice Management Chaincode](question-3-write-and-deploy-smart-invoice-management-chaincode/README.md)
+  * [Setup Script](question-3-write-and-deploy-smart-invoice-management-chaincode/setup-script.md)
+  * [Chaincode](question-3-write-and-deploy-smart-invoice-management-chaincode/chaincode.md)
+  * [Scoring Script](question-3-write-and-deploy-smart-invoice-management-chaincode/scoring-script.md)
