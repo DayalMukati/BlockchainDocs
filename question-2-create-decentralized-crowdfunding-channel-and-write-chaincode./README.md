@@ -65,6 +65,7 @@ peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C crowdfundchannel -n crowdfundcc \
     --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["CreateCampaign", "camp1", "CreatorA", "10000"]}'
 ```
 
@@ -76,6 +77,7 @@ peer chaincode invoke -o localhost:7050 \
 peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C crowdfundchannel -n crowdfundcc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
     --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["ContributeFunds", "camp1", "5000"]}'
 ```
@@ -89,5 +91,6 @@ peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C crowdfundchannel -n crowdfundcc \
     --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["WithdrawFunds", "camp1"]}'
 ```

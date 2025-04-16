@@ -67,6 +67,7 @@ peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C tradechannel -n tradecc \
     --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["RequestLoC", "loc1", "ImporterA", "ExporterB", "100000"]}'
 ```
 
@@ -81,6 +82,7 @@ peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C tradechannel -n tradecc \
     --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["ApproveLoC", "loc1", "BankX"]}'
 ```
 
@@ -104,6 +106,7 @@ peer chaincode query -C tradechannel -n tradecc -c '{"Args":["GetLoC","loc1"]}'
 peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C tradechannel -n tradecc \
+    --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
     --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["CompleteShipment", "loc1"]}'
 ```
@@ -129,6 +132,7 @@ peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls --cafile $ORDERER_CA -C tradechannel -n tradecc \
     --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+    --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
     -c '{"Args":["SettleLoC", "loc1"]}'
 ```
 
