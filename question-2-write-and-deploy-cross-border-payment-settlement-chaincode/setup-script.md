@@ -69,7 +69,7 @@ echo "✅ Hyperledger Fabric binaries installed."
 # Download and setup challenge solution
 echo "🔹 Downloading solution files..."
 
-sudo curl -sSL https://raw.githubusercontent.com/DayalMukati/nupero-credit-hlf/refs/heads/main/setup.sh | bash -s
+sudo curl -sSL https://raw.githubusercontent.com/DayalMukati/nupero-cross-hlf/refs/heads/main/setup.sh | bash -s
 echo "✅ Solution successfully downloaded."
 ls
 sudo chmod -R 777 ./challenge
