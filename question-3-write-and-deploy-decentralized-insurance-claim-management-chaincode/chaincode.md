@@ -6,90 +6,76 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-// SmartContract defines the Insurance Claim contract
+// SmartContract provides functions for managing insurance claims
 type SmartContract struct {
 	contractapi.Contract
 }
 
-// User represents a policyholder or insurer
-type User struct {
-	UserID   string `json:"userID"`
+// Policyholder represents a user with an insurance policy
+type Policyholder struct {
+	PolicyID string `json:"policyID"`
 	Name     string `json:"name"`
-	UserType string `json:"userType"` // "Policyholder" or "Insurer"
+	Balance  int    `json:"balance"`
 }
 
-// Claim represents an insurance claim
+// Claim represents an insurance claim filed by a policyholder
 type Claim struct {
-	ClaimID     string `json:"claimID"`
-	UserID      string `json:"userID"`
-	ClaimAmount int    `json:"claimAmount"`
-	ClaimReason string `json:"claimReason"`
-	Status      string `json:"status"` // "Pending", "Approved", "Rejected"
-	RejectionReason string `json:"rejectionReason,omitempty"`
+	ClaimID  string `json:"claimID"`
+	PolicyID string `json:"policyID"`
+	Amount   int    `json:"amount"`
+	Reason   string `json:"reason"`
+	Status   string `json:"status"` // "Pending", "Approved", "Rejected"
 }
 
-// RegisterUser registers a new user (Policyholder or Insurer)
-func (s *SmartContract) RegisterUser(ctx contractapi.TransactionContextInterface, userID string, name string, userType string) error {
-	existingUser, err := ctx.GetStub().GetState(userID)
+// RegisterPolicyholder creates a new policyholder record
+func (s *SmartContract) RegisterPolicyholder(ctx contractapi.TransactionContextInterface, policyID string, name string, balanceStr string) error {
+	_, err := ctx.GetStub().GetState(policyID)
 	if err != nil {
-		return fmt.Errorf("failed to read user from world state: %v", err)
-	}
-	if existingUser != nil {
-		return fmt.Errorf("user already exists")
+		return fmt.Errorf("failed to read from world state: %v", err)
 	}
 
-	user := User{
-		UserID:   userID,
+	balance, err := strconv.Atoi(balanceStr)
+	if err != nil {
+		return fmt.Errorf("invalid balance amount: %v", err)
+	}
+
+	holder := Policyholder{
+		PolicyID: policyID,
 		Name:     name,
-		UserType: userType,
+		Balance:  balance,
 	}
 
-	userJSON, err := json.Marshal(user)
+	data, err := json.Marshal(holder)
 	if err != nil {
 		return err
 	}
 
-	return ctx.GetStub().PutState(userID, userJSON)
+	return ctx.GetStub().PutState(policyID, data)
 }
 
 // FileClaim allows a policyholder to file an insurance claim
-func (s *SmartContract) FileClaim(ctx contractapi.TransactionContextInterface, claimID string, userID string, claimAmount int, claimReason string) error {
-	existingClaim, err := ctx.GetStub().GetState(claimID)
+func (s *SmartContract) FileClaim(ctx contractapi.TransactionContextInterface, claimID, policyID, amountStr, reason string) error {
+	_, err := ctx.GetStub().GetState(claimID)
 	if err != nil {
-		return fmt.Errorf("failed to read claim from world state: %v", err)
-	}
-	if existingClaim != nil {
-		return fmt.Errorf("claim already exists")
+		return fmt.Errorf("failed to read claim state: %v", err)
 	}
 
-	userJSON, err := ctx.GetStub().GetState(userID)
+	amount, err := strconv.Atoi(amountStr)
 	if err != nil {
-		return fmt.Errorf("failed to read user: %v", err)
-	}
-	if userJSON == nil {
-		return fmt.Errorf("user does not exist")
-	}
-
-	var user User
-	err = json.Unmarshal(userJSON, &user)
-	if err != nil {
-		return err
-	}
-
-	if user.UserType != "Policyholder" {
-		return fmt.Errorf("only policyholders can file claims")
+		return fmt.Errorf("invalid amount: %v", err)
 	}
 
 	claim := Claim{
-		ClaimID:     claimID,
-		UserID:      userID,
-		ClaimAmount: claimAmount,
-		ClaimReason: claimReason,
-		Status:      "Pending",
+		ClaimID:  claimID,
+		PolicyID: policyID,
+		Amount:   amount,
+		Reason:   reason,
+		Status:   "Pending",
 	}
 
 	claimJSON, err := json.Marshal(claim)
@@ -100,14 +86,14 @@ func (s *SmartContract) FileClaim(ctx contractapi.TransactionContextInterface, c
 	return ctx.GetStub().PutState(claimID, claimJSON)
 }
 
-// ApproveClaim allows an insurer to approve a claim
-func (s *SmartContract) ApproveClaim(ctx contractapi.TransactionContextInterface, claimID string) error {
+// ReviewClaim allows the insurer to approve or reject a claim
+func (s *SmartContract) ReviewClaim(ctx contractapi.TransactionContextInterface, claimID string, approve string) error {
 	claimJSON, err := ctx.GetStub().GetState(claimID)
 	if err != nil {
-		return fmt.Errorf("failed to read claim: %v", err)
+		return fmt.Errorf("failed to get claim: %v", err)
 	}
 	if claimJSON == nil {
-		return fmt.Errorf("claim does not exist")
+		return fmt.Errorf("claim %s does not exist", claimID)
 	}
 
 	var claim Claim
@@ -116,59 +102,57 @@ func (s *SmartContract) ApproveClaim(ctx contractapi.TransactionContextInterface
 		return err
 	}
 
-	if claim.Status != "Pending" {
-		return fmt.Errorf("claim is already processed")
+	// Update status
+	if approve == "true" {
+		claim.Status = "Approved"
+
+		// Credit amount to policyholder
+		holderJSON, err := ctx.GetStub().GetState(claim.PolicyID)
+		if err != nil {
+			return fmt.Errorf("failed to get policyholder: %v", err)
+		}
+		if holderJSON == nil {
+			return fmt.Errorf("policyholder %s does not exist", claim.PolicyID)
+		}
+
+		var holder Policyholder
+		err = json.Unmarshal(holderJSON, &holder)
+		if err != nil {
+			return err
+		}
+
+		holder.Balance += claim.Amount
+
+		holderUpdated, err := json.Marshal(holder)
+		if err != nil {
+			return err
+		}
+
+		err = ctx.GetStub().PutState(claim.PolicyID, holderUpdated)
+		if err != nil {
+			return err
+		}
+
+	} else {
+		claim.Status = "Rejected"
 	}
 
-	claim.Status = "Approved"
-
-	updatedClaimJSON, err := json.Marshal(claim)
+	claimUpdated, err := json.Marshal(claim)
 	if err != nil {
 		return err
 	}
 
-	return ctx.GetStub().PutState(claimID, updatedClaimJSON)
+	return ctx.GetStub().PutState(claimID, claimUpdated)
 }
 
-// RejectClaim allows an insurer to reject a claim with a reason
-func (s *SmartContract) RejectClaim(ctx contractapi.TransactionContextInterface, claimID string, rejectionReason string) error {
-	claimJSON, err := ctx.GetStub().GetState(claimID)
-	if err != nil {
-		return fmt.Errorf("failed to read claim: %v", err)
-	}
-	if claimJSON == nil {
-		return fmt.Errorf("claim does not exist")
-	}
-
-	var claim Claim
-	err = json.Unmarshal(claimJSON, &claim)
-	if err != nil {
-		return err
-	}
-
-	if claim.Status != "Pending" {
-		return fmt.Errorf("claim is already processed")
-	}
-
-	claim.Status = "Rejected"
-	claim.RejectionReason = rejectionReason
-
-	updatedClaimJSON, err := json.Marshal(claim)
-	if err != nil {
-		return err
-	}
-
-	return ctx.GetStub().PutState(claimID, updatedClaimJSON)
-}
-
-// GetClaimStatus retrieves the status of a claim
-func (s *SmartContract) GetClaimStatus(ctx contractapi.TransactionContextInterface, claimID string) (*Claim, error) {
+// GetClaimDetails retrieves details of a claim
+func (s *SmartContract) GetClaimDetails(ctx contractapi.TransactionContextInterface, claimID string) (*Claim, error) {
 	claimJSON, err := ctx.GetStub().GetState(claimID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read claim: %v", err)
 	}
 	if claimJSON == nil {
-		return nil, fmt.Errorf("claim does not exist")
+		return nil, fmt.Errorf("claim %s does not exist", claimID)
 	}
 
 	var claim Claim
@@ -180,31 +164,23 @@ func (s *SmartContract) GetClaimStatus(ctx contractapi.TransactionContextInterfa
 	return &claim, nil
 }
 
-// GetUserClaims retrieves all claims filed by a specific user
-func (s *SmartContract) GetUserClaims(ctx contractapi.TransactionContextInterface, userID string) ([]Claim, error) {
-	queryString := fmt.Sprintf(`{"selector":{"userID":"%s"}}`, userID)
-	resultsIterator, err := ctx.GetStub().GetQueryResult(queryString)
+// GetPolicyholderDetails retrieves details of a policyholder
+func (s *SmartContract) GetPolicyholderDetails(ctx contractapi.TransactionContextInterface, policyID string) (*Policyholder, error) {
+	holderJSON, err := ctx.GetStub().GetState(policyID)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get user claims: %v", err)
+		return nil, fmt.Errorf("failed to read policyholder: %v", err)
 	}
-	defer resultsIterator.Close()
-
-	var claims []Claim
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return nil, err
-		}
-
-		var claim Claim
-		err = json.Unmarshal(queryResponse.Value, &claim)
-		if err != nil {
-			return nil, err
-		}
-		claims = append(claims, claim)
+	if holderJSON == nil {
+		return nil, fmt.Errorf("policyholder %s does not exist", policyID)
 	}
 
-	return claims, nil
+	var holder Policyholder
+	err = json.Unmarshal(holderJSON, &holder)
+	if err != nil {
+		return nil, err
+	}
+
+	return &holder, nil
 }
 
 // Main function to start the chaincode
