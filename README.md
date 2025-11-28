@@ -2,25 +2,11 @@
 icon: hand-wave
 cover: https://gitbookio.github.io/onboarding-template-images/header.png
 coverY: 0
-layout:
-  cover:
-    visible: true
-    size: full
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
 ---
 
 # Welcome
 
-### Welcome to HashStudy: Your Hub for Blockchain Recipes
+### Welcome to DAMUK Academy: Your Hub for Blockchain Recipes
 
 Dive into the world of blockchain with our collection of hands-on recipes! At HashStudy, we know that the best way to learn is by doing, which is why each recipe is designed to guide you step-by-step through building and deploying blockchain solutions. Whether you’re a beginner or a seasoned pro, our recipes will help you master the essentials and push the boundaries of blockchain technology.
 
